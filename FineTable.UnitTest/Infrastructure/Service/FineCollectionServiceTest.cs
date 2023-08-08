@@ -50,6 +50,22 @@ namespace FineTable.UnitTest.Infrastructure.Service
 		}
 
 		[Fact]
+		public async Task GetFineCollectionByID_OnIdNotFound_ReturnNullResponse()
+		{
+			DatabaseFixture _fixture = new DatabaseFixture();
+			using (var factory = new ServiceFactory(_fixture.mockDbContext, true))
+			{
+				var service = new FineCollectionService(factory);
+				//Arrange
+				int id = 0;
+				//Act
+				var Result = await service.GetFineCollectionById(id);
+				//Assert
+				Assert.Null(Result);
+			}
+		}
+
+		[Fact]
 		public async Task AddFineCollection_OnSuccess_ReturnTrue()
 		{
 			DatabaseFixture _fixture = new DatabaseFixture();

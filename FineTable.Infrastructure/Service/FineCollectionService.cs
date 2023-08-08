@@ -46,6 +46,10 @@ namespace FineTable.Infrastructure.Service
 		{
 			var service = _serviceFactory.GetInstance<EFineCollection>();
 			var fineFine = service.ListAsync().Result.FirstOrDefault(x => x.Id == id);
+			if (fineFine == null)
+			{
+				return null;
+			}
 			return fineFine;
 		}
 
