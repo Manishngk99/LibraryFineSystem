@@ -1,4 +1,5 @@
 ﻿using FineTable.API.Controllers;
+using FineTable.Application.DTO.Response;
 using FineTable.Application.Manager.Interface;
 using FineTable.Infrastructure.Service;
 using FineTable.UnitTest.Infrastructure.Data;
@@ -25,6 +26,49 @@ namespace FineTable.UnitTest.Api.Controller
 		}
 
 		[Fact]
+		public async Task GetFineCollections_OnSuccess_ReturnResponseList()
+		{
+			//Arrange
+			FeeCollectionSettingDataInfo.init();
+			var fineCollectionResponsesList = FeeCollectionSettingDataInfo.fineCollectionResponseList;
+			var Expected_Result = new ServiceResult<List<FineCollectionResponse>>()
+			{
+				Data = fineCollectionResponsesList,
+				Message = "FineCollection Added!",
+				Status = StatusType.Success
+			};
+
+			//Act
+			_mockManager.Setup(x => x.GetFineCollections()).ReturnsAsync(Expected_Result);
+			var Actual_Result = await _controller.GetFineCollections();
+
+			//Assert
+			Assert.Equivalent(Expected_Result, Actual_Result);
+		}
+
+		[Fact]
+		public async Task GetFineCollectionsByID_OnSuccess_ReturnResponse()
+		{
+			//Arrange
+			int id = 1;
+			FeeCollectionSettingDataInfo.init();
+			var fineCollectionResponses = FeeCollectionSettingDataInfo.fineCollectionResponse;
+			var Expected_Result = new ServiceResult<FineCollectionResponse>()
+			{
+				Data = fineCollectionResponses,
+				Message = "FineCollection Added!",
+				Status = StatusType.Success
+			};
+
+			//Act
+			_mockManager.Setup(x => x.GetFineCollectionById(id)).ReturnsAsync(Expected_Result);
+			var Actual_Result = await _controller.GetFineCollectionById(id);
+
+			//Assert
+			Assert.Equivalent(Expected_Result, Actual_Result);
+		}
+
+		[Fact]
 		public async Task AddFineCollection_OnSuccess_ReturnTrue()
 		{
 			//Arrange
@@ -39,36 +83,11 @@ namespace FineTable.UnitTest.Api.Controller
 
 			//Act
 			_mockManager.Setup(x => x.AddFineCollection(request)).ReturnsAsync(Expected_Result);
-			var Actual_Result = await _controller.AddFineCollection(request) as OkObjectResult;
+			var Actual_Result = await _controller.AddFineCollection(request) ;
 
 			//Assert
-			Assert.NotNull(Actual_Result);
-			Assert.Equal(200, Actual_Result.StatusCode);
-			Assert.Equal(Expected_Result.Data, Actual_Result.Value);
+			Assert.Equivalent(Expected_Result, Actual_Result);
 		}
-
-		//[Fact]
-		//public async Task AddFineCollection_OnFailure_ReturnErrorMessage()
-		//{
-		//	//Arrange
-		//	FeeCollectionSettingDataInfo.init();
-		//	var request = FeeCollectionSettingDataInfo.fineCollectionRequest;
-		//	var Expected_Result = new ServiceResult<bool>()
-		//	{
-		//		Data = true,
-		//		Message = "FineCollection Added!",
-		//		Status = StatusType.Success
-		//	};
-
-		//	//Act
-		//	_mockManager.Setup(x => x.AddFineCollection(request)).ReturnsAsync(Expected_Result);
-		//	var Actual_Result = await _controller.AddFineCollection(request) as OkObjectResult;
-
-		//	//Assert
-		//	Assert.NotNull(Actual_Result);
-		//	Assert.Equal(200, Actual_Result.StatusCode);
-		//	Assert.Equal(Expected_Result.Data, Actual_Result.Value);
-		//}
 
 		[Fact]
 		public async Task UpdateFineCollection_OnSuccess_ReturnTrue()
@@ -85,12 +104,10 @@ namespace FineTable.UnitTest.Api.Controller
 
 			//Act
 			_mockManager.Setup(x => x.UpdateFineCollection(request)).ReturnsAsync(Expected_Result);
-			var Actual_Result = await _controller.UpdateFineCollection(request) as OkObjectResult;
+			var Actual_Result = await _controller.UpdateFineCollection(request) ;
 
 			//Assert
-			Assert.NotNull(Actual_Result);
-			Assert.Equal(200, Actual_Result.StatusCode);
-			Assert.Equal(Expected_Result.Data, Actual_Result.Value);
+			Assert.Equivalent(Expected_Result, Actual_Result);	
 		}
 
 		[Fact]
@@ -109,12 +126,11 @@ namespace FineTable.UnitTest.Api.Controller
 
 			//Act
 			_mockManager.Setup(x => x.DeleteFineCollection(id)).ReturnsAsync(Expected_Result);
-			var Actual_Result = await _controller.DeleteFineCollection(id) as OkObjectResult;
+			var Actual_Result = await _controller.DeleteFineCollection(id);
 
 			//Assert
-			Assert.NotNull(Actual_Result);
-			Assert.Equal(200, Actual_Result.StatusCode);
-			Assert.Equal(Expected_Result.Data, Actual_Result.Value);
+			Assert.Equivalent(Expected_Result, Actual_Result);
+
 		}
 	}
 }
