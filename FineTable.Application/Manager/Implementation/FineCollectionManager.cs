@@ -2,6 +2,7 @@
 using FineTable.Application.DTO.Response;
 using FineTable.Application.Manager.Interface;
 using FineTable.Domain.Entities;
+using FineTable.Domain.Enum;
 using FineTable.Domain.Interface;
 using FineTable.Infrastructure.Service;
 using System;

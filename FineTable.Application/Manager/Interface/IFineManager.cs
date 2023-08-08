@@ -1,5 +1,6 @@
 ﻿using FineTable.Application.DTO.Request;
 using FineTable.Application.DTO.Response;
+using FineTable.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace FineTable.Application.Manager.Interface
         Task<ServiceResult<List<FineResponse>>> GetFine();
         Task<ServiceResult<FineResponse>> GetFineById(int id);
         Task<ServiceResult<bool>> UpdateFineStatus(FineRequest fine);
+        Task<ServiceResult<int>> GetRateByMemberType(MemberType memberType);
     }
 }
