@@ -37,6 +37,9 @@ namespace FineTable.UnitTest
 			var feeSettings = FeeSettingDataInfo.FeeSetting;
 			databaseContext.Database.EnsureCreated();
             #endregion
+			FeeCollectionSettingDataInfo.init();
+			var feeCollectionSetting = FeeCollectionSettingDataInfo.eFineCollectionList;
+			databaseContext.FineCollection.AddRange(feeCollectionSetting);
 
 
             databaseContext.SaveChanges();
