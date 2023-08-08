@@ -36,9 +36,14 @@ namespace FineTable.UnitTest.Infrastructure.Data
 
 				}
 			};
+			FailureFineSetting = new EFine()
+			{
+				Id = -1,
+			};
 		}
 		public static List<EFine> FeeSetting { get; set; }
         public static EFine SuccessFineSetting { get; private set; } = new EFine();
+		public static EFine FailureFineSetting { get; private set; } = new EFine();
         public static List<FineResponse> FineResponse { get; private set; } = new List<FineResponse>();
     }
 }

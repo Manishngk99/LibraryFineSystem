@@ -21,37 +21,28 @@ namespace FineTable.Infrastructure.Service
 
         public async Task<List<EFine>> GetFine()
         {
-            try 
-            {
+            
                 var service = _factory.GetInstance<EFine>();
                 var result = await service.ListAsync();
                 return result;
-            }
-            catch(Exception ex) { throw ex; }
+            
         }
 
         public async Task<EFine> GetFineByFineId(int id)
         {
-            try
+
+            var service = _factory.GetInstance<EFine>();
+            var result = await service.FindAsync(id);
+            if (result == null)
             {
-                var service = _factory.GetInstance<EFine>();
-                var result = await service.FindAsync(id);
-                if(result == null)
-                {
-                    return null;
-                }
-                return result;
+                return null;
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            return result;
         }
 
         public async Task<bool> UpdateFineStatus(EFine fine)
         {
-            try
-            {
+            
                 var service = _factory.GetInstance<EFine>();
                 var user = await service.FindAsync(fine.Id);
                 if (user != null)
@@ -62,11 +53,8 @@ namespace FineTable.Infrastructure.Service
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            
+           
         }
     }
 }
