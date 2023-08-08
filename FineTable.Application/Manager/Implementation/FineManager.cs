@@ -2,6 +2,7 @@
 using FineTable.Application.DTO.Request;
 using FineTable.Application.DTO.Response;
 using FineTable.Application.Manager.Interface;
+using FineTable.Domain.Enum;
 using FineTable.Domain.Interface;
 using FineTable.Infrastructure.Service;
 using Microsoft.Extensions.Logging;
@@ -86,7 +87,19 @@ namespace FineTable.Application.Manager.Implementation
             }
         }
 
-        public async Task<ServiceResult<bool>> UpdateFineStatus(FineRequest finerequest)
+        public async Task<ServiceResult<int>> GetRateByMemberType(MemberType memberType)
+        {
+			var fineList = await _service.GetFine();
+			var rate = fineList.Where(x => x.MemberType == memberType).Select(x => x.Amount).FirstOrDefault();
+            return new ServiceResult<int>() { 
+                Data = rate,
+                Message = $"Rate of {memberType}",
+                Status = StatusType.Success,    
+            };
+		}
+
+
+		public async Task<ServiceResult<bool>> UpdateFineStatus(FineRequest finerequest)
         {
             var serviceResult = new ServiceResult<bool>();
 

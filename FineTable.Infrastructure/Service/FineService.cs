@@ -38,6 +38,12 @@ namespace FineTable.Infrastructure.Service
                 return null;
             }
             return result;
+
+
+
+            //var fineList = await service.ListAsync();
+            //         var rate = await fineList.Where(x=> x.MemberType == id)
+
         }
 
         public async Task<bool> UpdateFineStatus(EFine fine)

@@ -1,5 +1,6 @@
 ﻿using FineTable.Application.DTO.Request;
 using FineTable.Application.Manager.Interface;
+using FineTable.Domain.Enum;
 using FineTable.Infrastructure.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,19 @@ namespace FineTable.API.Controllers
             }
             return NotFound(result.Message);
         }
-        [HttpPut]
+
+        [HttpGet("GetRateByMemberType")]
+		public async Task<IActionResult> GetRateByMemberType(MemberType MemberType)
+		{
+			var result = await _manager.GetRateByMemberType(MemberType);
+			if (result.Status == StatusType.Success)
+			{
+				return Ok(result.Data);
+			}
+			return NotFound(result.Message);
+		}
+
+		[HttpPut]
         public async Task<IActionResult> UpdateFineStatus(int id, FineRequest request)
         {
             if(id!= request.Id)
