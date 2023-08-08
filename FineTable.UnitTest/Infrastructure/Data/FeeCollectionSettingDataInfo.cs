@@ -76,7 +76,15 @@ namespace FineTable.UnitTest.Infrastructure.Data
 				Amount = 100,
 				Days = 2
 			};
-
+			eFineCollectionRequest = new EFineCollection()
+			{
+				MemberType = Domain.Enum.MemberType.Student,
+				CreatedDate = DateTime.Today,
+				MemberID = 0,
+				ReturnDate = DateTime.Today,
+				Amount = 100,
+				Days = 2
+			};
 		}
 
 		public static FineCollectionRequest fineCollectionRequest { get; set; } = new FineCollectionRequest();
@@ -85,6 +93,7 @@ namespace FineTable.UnitTest.Infrastructure.Data
 		public static FineCollectionResponse fineCollectionResponse { get; set; } = new FineCollectionResponse();
 		public static List<EFineCollection> eFineCollectionList { get; set; } = new List<EFineCollection>();
 		public static EFineCollection eFineCollection { get; set; } = new EFineCollection();
+		public static EFineCollection eFineCollectionRequest { get; set; } = new EFineCollection();
 	}
 }
 
