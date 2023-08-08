@@ -104,5 +104,66 @@ namespace FineTable.UnitTest.Application.Manager
 			Assert.Equal(expectedFineResponses,result.Data);
 
 		}
-	}
+		[Fact]
+		public async Task GetFineById_ReturnsFailure_WhenIncorrectIdProvided()
+		{
+            var fineId = -1;
+            var expectedFine = new EFine { Id = fineId };
+            var expectedFineResponse = new FineResponse { Id = fineId };
+            _fineServiceMock
+                .Setup(service => service.GetFineByFineId(fineId))
+                .ReturnsAsync(expectedFine);
+            _mapperMock
+                .Setup(mapper => mapper.Map<FineResponse>(expectedFine))
+                .Returns(expectedFineResponse);
+
+            //Act
+            var result = await _manager.GetFineById(fineId);
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.Equal(StatusType.Success, result.Status);
+            Assert.Equal(expectedFineResponse, result.Data);
+        }
+		[Fact]
+		public async Task GetFineList_ReturnsError()
+		{
+            // Arrange 
+            _fineServiceMock
+                .Setup(service => service.GetFine())
+                .ThrowsAsync(new Exception("An error occurred"));
+
+            // Act
+            var result = await _manager.GetFine();
+
+            // Assert
+            Assert.Equal(StatusType.Failure, result.Status);
+            Assert.Null(result.Data); 
+        }
+        [Fact]
+        public async Task UpdateFine_OnFailure_ReturnsFalse()
+        {
+            //Arrange
+            var request = new FineRequest { Id = 1 };
+            var expectedFine = new EFine { Id = 1 };
+
+            _fineServiceMock
+                .Setup(service => service.GetFineByFineId(request.Id))
+                .ReturnsAsync(expectedFine);
+            _mapperMock
+                .Setup(mapper => mapper.Map(request, expectedFine))
+                .Returns(expectedFine);
+            _fineServiceMock
+                .Setup(service => service.UpdateFineStatus(expectedFine))
+                .ReturnsAsync(false);
+
+            //Act
+            var result = await _manager.UpdateFineStatus(request);
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.Equal(StatusType.Failure, result.Status);
+            Assert.False(result.Data);
+        }
+    }
 }

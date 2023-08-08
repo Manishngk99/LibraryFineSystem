@@ -66,5 +66,38 @@ namespace FineTable.UnitTest.Infrastructure.Service
 				Assert.NotNull(result);
 			}
 		}
+		[Fact]
+		public async Task GetFineById_ReturnsError_WhenIdNotFound()
+		{
+			DatabaseFixture _fixture = new DatabaseFixture();
+			using (var factory = new ServiceFactory(_fixture.mockDbContext,true))
+			{
+				//arrange
+				var service = new FineService(factory);
+				var fineId = 0;
+
+				//act
+				var result = await service.GetFineByFineId(fineId);
+
+				//assert
+				Assert.Null(result);
+			}
+		}
+		[Fact]
+		public async Task UpdateFine_ReturnsFalse_WhenIncorrectIdProvided()
+		{
+			DatabaseFixture _fixture = new DatabaseFixture();
+			using (var factory= new ServiceFactory(_fixture.mockDbContext, true))
+			{
+				//arrange
+				var service = new FineService(factory);
+				
+                var requestresult = FeeSettingDataInfo.FailureFineSetting;
+
+                //act
+                var result = await service.UpdateFineStatus(requestresult);
+				Assert.False(result);
+			}
+		}
 	}
 }
