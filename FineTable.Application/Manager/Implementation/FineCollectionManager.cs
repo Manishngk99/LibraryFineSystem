@@ -66,7 +66,6 @@ namespace FineTable.Application.Manager.Implementation
                 var fineList = await _serviceFine.GetFine();
                 var rate = fineList.Where(x => x.MemberType == fineCollectionRequest.MemberType).Select(x => x.Amount).FirstOrDefault();
 
-
                 var parse = new EFineCollection()
                 {
                     Id = fineCollectionRequest.Id,
