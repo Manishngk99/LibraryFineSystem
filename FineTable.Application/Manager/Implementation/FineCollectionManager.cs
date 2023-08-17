@@ -127,6 +127,27 @@ namespace FineTable.Application.Manager.Implementation
                 Status = StatusType.Success,
             };
         }
+        public async Task<ServiceResult<List<FineCollectionResponseProducer>>> GetFineCollectionProducer()
+        {
+            var fineCollection = await _service.GetFineCollections();
+            var result = (from s in fineCollection
+                          where s.FineStatus == Domain.Enum.FineStatus.Active
+                          select new FineCollectionResponseProducer()
+                          {
+                              Id = s.Id,
+                              MemberID = s.MemberID,
+                              MemberType = s.MemberType,
+                              CreatedDate = s.CreatedDate
+                          }).ToList();
+
+            return new ServiceResult<List<FineCollectionResponseProducer>>()
+            {
+
+                Data = result,
+                Message = "FineCollection Retrieved!",
+                Status = StatusType.Success,
+            };
+        }
 
         public async Task<ServiceResult<FineCollectionResponse>> GetFineCollectionById(int id)
         {

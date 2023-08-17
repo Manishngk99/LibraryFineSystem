@@ -19,6 +19,8 @@ namespace FineTable.Application.Manager.Interface
         Task<ServiceResult<List<FineCollectionResponse>>> GetFineCollections();
         Task<ServiceResult<FineCollectionResponse>> GetFineCollectionById(int id);
 
+        Task<ServiceResult<List<FineCollectionResponseProducer>>> GetFineCollectionProducer();
+
 
     }
 }
