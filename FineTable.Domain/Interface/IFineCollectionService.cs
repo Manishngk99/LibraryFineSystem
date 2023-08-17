@@ -11,6 +11,7 @@ namespace FineTable.Domain.Interface
     {
         Task<bool> AddFineCollection(EFineCollection eFineCollection);
         Task<List<EFineCollection>> GetFineCollections();
+       
         Task<EFineCollection> GetFineCollectionById(int id);
         Task<bool> UpdateFineCollection(EFineCollection eFineCollection);
         Task<bool> DeleteFineCollection(int id);

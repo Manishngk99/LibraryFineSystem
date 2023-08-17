@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FineTable.Application", "Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FineTable.API", "FineTable.API\FineTable.API.csproj", "{DB168560-33D7-4DCA-9282-83AA66D2F077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FineTable.UnitTest", "FineTable.UnitTest\FineTable.UnitTest.csproj", "{AA76E54F-A070-48FD-AB16-394FEE24BF68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FineTable.UnitTest", "FineTable.UnitTest\FineTable.UnitTest.csproj", "{AA76E54F-A070-48FD-AB16-394FEE24BF68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Kafka", "..\..\.Net Practices\Kafka Implementation\Common.Kafka (1)\Common.Kafka\Common.Kafka.csproj", "{6D69E812-CBAC-4778-A57E-C6FEEC7B51F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AA76E54F-A070-48FD-AB16-394FEE24BF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA76E54F-A070-48FD-AB16-394FEE24BF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA76E54F-A070-48FD-AB16-394FEE24BF68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D69E812-CBAC-4778-A57E-C6FEEC7B51F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D69E812-CBAC-4778-A57E-C6FEEC7B51F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D69E812-CBAC-4778-A57E-C6FEEC7B51F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D69E812-CBAC-4778-A57E-C6FEEC7B51F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
