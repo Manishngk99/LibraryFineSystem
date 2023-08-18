@@ -1,5 +1,6 @@
 ﻿using FineTable.Application.DTO.Request;
 using FineTable.Application.DTO.Response;
+using FineTable.Application.Kafka.Interface;
 using FineTable.Application.Manager.Interface;
 using FineTable.Domain.Entities;
 using FineTable.Domain.Enum;
@@ -18,29 +19,22 @@ namespace FineTable.Application.Manager.Implementation
     {
         private readonly IFineCollectionService _service;
         private readonly IFineService _serviceFine;
-        public FineCollectionManager(IFineCollectionService fineCollectionService, IFineService serviceFine)
+        public FineCollectionManager(IFineCollectionService fineCollectionService, IFineService serviceFine )
         {
             _service = fineCollectionService;
             _serviceFine = serviceFine;
+              
         }
-
         public async Task<ServiceResult<bool>> AddFineCollection(FineCollectionRequest fineCollectionRequest)
         {
             try
             {
-                //var fineList = await _serviceFine.GetFine();
-                //var rate = fineList.Where(x => x.MemberType == fineCollectionRequest.MemberType).Select(x => x.Amount).FirstOrDefault();
-
                 var parse = new EFineCollection()
                 {
-                    //Amount = fineCollectionRequest.Days * rate,
                     CreatedDate = fineCollectionRequest.CreatedDate,
-                    //Days = fineCollectionRequest.Days,
                     MemberID = fineCollectionRequest.MemberID,
-                    //ReturnDate = fineCollectionRequest.ReturnDate,  
                     MemberType = fineCollectionRequest.MemberType,
                 };
-
 
                 var result = await _service.AddFineCollection(parse);
                 return new ServiceResult<bool>()
@@ -53,12 +47,7 @@ namespace FineTable.Application.Manager.Implementation
             catch (Exception ex) { throw; }
         }
 
-        //public async
-
-
-
-
-        public async Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionUpdateRequest fineCollectionRequest)
+        public async Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionDetailRequest fineCollectionRequest)
         {
             try
             {
@@ -66,10 +55,10 @@ namespace FineTable.Application.Manager.Implementation
                 var fineList = await _serviceFine.GetFine();
                 var rate = fineList.Where(x => x.MemberType == fineCollectionRequest.MemberType).Select(x => x.Amount).FirstOrDefault();
 
-
                 var parse = new EFineCollection()
                 {
-                    Id = fineCollectionRequest.Id,
+                    Amount = fineCollectionRequest.Amount,  
+                    FineStatus = fineCollectionRequest.FineStatus,
                     CreatedDate = fineCollectionRequest.CreatedDate,
                     MemberID = fineCollectionRequest.MemberID,
                     ReturnDate = fineCollectionRequest.ReturnDate,
@@ -110,6 +99,7 @@ namespace FineTable.Application.Manager.Implementation
         public async Task<ServiceResult<List<FineCollectionResponse>>> GetFineCollections()
         {
             var fineCollection = await _service.GetFineCollections();
+            
             var result = (from s in fineCollection
                           where s.FineStatus == Domain.Enum.FineStatus.Active
                           select new FineCollectionResponse()
@@ -128,27 +118,7 @@ namespace FineTable.Application.Manager.Implementation
                 Status = StatusType.Success,
             };
         }
-        public async Task<ServiceResult<List<FineCollectionResponseProducer>>> GetFineCollectionProducer()
-        {
-            var fineCollection = await _service.GetFineCollections();
-            var result = (from s in fineCollection
-                          where s.FineStatus == Domain.Enum.FineStatus.Active
-                          select new FineCollectionResponseProducer()
-                          {
-                              Id = s.Id,
-                              MemberID = s.MemberID,
-                              MemberType = s.MemberType,
-                              CreatedDate = s.CreatedDate
-                          }).ToList();
-
-            return new ServiceResult<List<FineCollectionResponseProducer>>()
-            {
-
-                Data = result,
-                Message = "FineCollection Retrieved!",
-                Status = StatusType.Success,
-            };
-        }
+       
 
         public async Task<ServiceResult<FineCollectionResponse>> GetFineCollectionById(int id)
         {

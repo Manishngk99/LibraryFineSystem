@@ -96,6 +96,30 @@ namespace FineTable.Application.Manager.Implementation
                 Message = $"Rate of {memberType}",
                 Status = StatusType.Success,    
             };
+
+			//Alternative if parameter is int
+
+			//string studentValue = "Student";
+			//string StaffValue = "Staff";
+
+			//MemberType enumStudentValue = (MemberType)Enum.Parse(typeof(MemberType), studentValue);
+			//int intStaffValue = (int)enumStudentValue;
+
+			//MemberType enumStaffValue = (MemberType)Enum.Parse(typeof(MemberType), StaffValue);
+			//int intStudentValue = (int)enumStaffValue;
+
+			//if (fineCollectionRequest.Id == intStaffValue)
+			//{
+			//    var rateStaff = fineList.Where(x => x.MemberType == MemberType.Staff).Select(x => x.Amount).FirstOrDefault();
+			//    //return rateStaff;
+			//}
+
+			//if (fineCollectionRequest.Id == intStudentValue)
+			//{
+			//    var rateStaff = fineList.Where(x => x.MemberType == MemberType.Student).Select(x => x.Amount).FirstOrDefault();
+			//    //return rateStaff;
+			//}
+
 		}
 
 
