@@ -14,17 +14,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\.Net Practices\Kafka Implementation\Common.Kafka (1)\Common.Kafka\Common.Kafka.csproj" />
+    <ProjectReference Include="..\Common.Kafka\Common.Kafka.csproj" />
     <ProjectReference Include="..\FineTable.Infrastructure\FineTable.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Kafka\Handler\" />
   </ItemGroup>
 
 </Project>

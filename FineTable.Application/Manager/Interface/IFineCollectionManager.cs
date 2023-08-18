@@ -13,13 +13,12 @@ namespace FineTable.Application.Manager.Interface
     {
 
         Task<ServiceResult<bool>>AddFineCollection(FineCollectionRequest fineCollectionRequest);
-        Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionUpdateRequest fineCollectionRequest);
+        Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionDetailRequest fineCollectionRequest);
         Task<ServiceResult<bool>> DeleteFineCollection(int id);
 
         Task<ServiceResult<List<FineCollectionResponse>>> GetFineCollections();
         Task<ServiceResult<FineCollectionResponse>> GetFineCollectionById(int id);
 
-        Task<ServiceResult<List<FineCollectionResponseProducer>>> GetFineCollectionProducer();
 
 
     }

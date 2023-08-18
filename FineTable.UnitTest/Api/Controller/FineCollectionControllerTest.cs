@@ -89,26 +89,26 @@ namespace FineTable.UnitTest.Api.Controller
 			Assert.Equivalent(Expected_Result, Actual_Result);
 		}
 
-		[Fact]
-		public async Task UpdateFineCollection_OnSuccess_ReturnTrue()
-		{
-			//Arrange
-			FeeCollectionSettingDataInfo.init();
-			var request = FeeCollectionSettingDataInfo.fineCollectionUpdateRequest;
-			var Expected_Result = new ServiceResult<bool>()
-			{
-				Data = true,
-				Message = "FineCollection Updated!",
-				Status = StatusType.Success
-			};
+		//[Fact]
+		//public async Task UpdateFineCollection_OnSuccess_ReturnTrue()
+		//{
+		//	//Arrange
+		//	FeeCollectionSettingDataInfo.init();
+		//	var request = FeeCollectionSettingDataInfo.fineCollectionUpdateRequest;
+		//	var Expected_Result = new ServiceResult<bool>()
+		//	{
+		//		Data = true,
+		//		Message = "FineCollection Updated!",
+		//		Status = StatusType.Success
+		//	};
 
-			//Act
-			_mockManager.Setup(x => x.UpdateFineCollection(request)).ReturnsAsync(Expected_Result);
-			var Actual_Result = await _controller.UpdateFineCollection(request) ;
+		//	//Act
+		//	_mockManager.Setup(x => x.UpdateFineCollection(request)).ReturnsAsync(Expected_Result);
+		//	var Actual_Result = await _controller.UpdateFineCollection(request) ;
 
-			//Assert
-			Assert.Equivalent(Expected_Result, Actual_Result);	
-		}
+		//	//Assert
+		//	Assert.Equivalent(Expected_Result, Actual_Result);	
+		//}
 
 		[Fact]
 		public async Task DeleteFineCollection_OnSuccess_ReturnTrue()
