@@ -35,6 +35,7 @@ namespace FineTable.Application.Kafka.Consumer
 			try
 			{
 				await _consumer.Consume(KafkaTopic.FineCollectionDetails, stoppingToken, model);
+
 			}
 			catch (Exception ex)
 			{

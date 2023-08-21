@@ -41,9 +41,9 @@ namespace FineTable.Application
 			services.AddScoped<IFineManager, FineManager>();
             services.AddScoped<IFineCollectionManager, FineCollectionManager>();
 
+			services.AddHostedService<IssueDetailConsumer>();
 			services.AddScoped<IssueHandler>();
 			services.AddScoped<IKafkaHandler<string, FineCollectionDetailRequest>, IssueHandler>();
-			services.AddHostedService<IssueDetailConsumer>();
 
 			return services;
         }
