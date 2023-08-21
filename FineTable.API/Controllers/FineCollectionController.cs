@@ -45,7 +45,7 @@ namespace FineTable.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ServiceResult<bool>> AddFineCollection(FineCollectionRequest request)
+        public async Task<ServiceResult<bool>> AddFineCollection(FineCollection request)
         { 
             var result = await _manager.AddFineCollection(request);
             return new ServiceResult<bool>()

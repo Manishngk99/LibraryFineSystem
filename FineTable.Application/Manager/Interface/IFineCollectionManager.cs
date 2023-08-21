@@ -12,7 +12,7 @@ namespace FineTable.Application.Manager.Interface
     public interface IFineCollectionManager
     {
 
-        Task<ServiceResult<bool>>AddFineCollection(FineCollectionRequest fineCollectionRequest);
+        Task<ServiceResult<bool>>AddFineCollection(FineCollection fineCollection);
         Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionDetailRequest fineCollectionRequest);
         Task<ServiceResult<bool>> DeleteFineCollection(int id);
 

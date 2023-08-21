@@ -22,30 +22,40 @@ namespace FineTable.Application
     {
         public static IServiceCollection AddInApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
-			var clientConfig = new ClientConfig()
-			{
-				SaslUsername = Configuration["KafkaConfig:SaslUsername"],
-				BootstrapServers = Configuration["KafkaConfig:BootstrapServers"],
-				SaslPassword = Configuration["KafkaConfig:SaslPassword"],
-				SaslMechanism = SaslMechanism.Plain,
-				SecurityProtocol = SecurityProtocol.SaslSsl,                                                                                                                             
-				EnableSslCertificateVerification = false // to de force ssl in local 
-			};
+            var clientConfig = new ClientConfig()
+            {
+                SaslUsername = Configuration["KafkaConfig:SaslUsername"],
+                BootstrapServers = Configuration["KafkaConfig:BootstrapServers"],
+                SaslPassword = Configuration["KafkaConfig:SaslPassword"],
+                SaslMechanism = SaslMechanism.Plain,
+                SecurityProtocol = SecurityProtocol.SaslSsl,
+                EnableSslCertificateVerification = false // to de force ssl in local 
+            };
 
-			var consumerConfig = new ConsumerConfig(clientConfig);
+            var producerConfig = new ProducerConfig(clientConfig);
 
-			services.AddSingleton(consumerConfig);
+            var consumerConfig = new ConsumerConfig(clientConfig);
 
-			services.AddSingleton(typeof(IKafkaConsumer<,>), typeof(KafkaConsumer<,>));
+            services.AddSingleton(producerConfig);
+            services.AddSingleton(consumerConfig);
 
-			services.AddScoped<IFineManager, FineManager>();
+            services.AddSingleton(typeof(IKafkaProducer<,>), typeof(KafkaProducer<,>));
+
+
+            services.AddSingleton(typeof(IKafkaConsumer<,>), typeof(KafkaConsumer<,>));
+
+
+            services.AddScoped<IFineManager, FineManager>();
             services.AddScoped<IFineCollectionManager, FineCollectionManager>();
 
-			services.AddScoped<IssueHandler>();
-			services.AddScoped<IKafkaHandler<string, FineCollectionDetailRequest>, IssueHandler>();
-			services.AddHostedService<IssueDetailConsumer>();
+            services.AddHostedService<IssueDetailConsumer>();
+            //services.AddScoped<IssueHandler>();
+            services.AddScoped<IKafkaHandler<string, FineCollection>, IssueHandler>();
 
-			return services;
+            //services.AddScoped<IKafkaHandler<string, FineCollection>, IssueHandler>();
+            //services.AddHostedService<IssueDetailConsumer>();
+            
+            return services;
         }
     }
 }
