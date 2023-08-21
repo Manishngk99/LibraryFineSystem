@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace FineTable.Application.Kafka.Handler
 {
-	public class IssueHandler : IKafkaHandler<string, FineCollectionDetailRequest>
-	{
-		private readonly IFineCollectionManager _manager;
+    public class IssueHandler : IKafkaHandler<string, FineCollection>
+    {
+        private readonly IFineCollectionManager _manager;
 
 
-		public IssueHandler(IFineCollectionManager manager)
-		{
-			_manager = manager;
-		}
-		public Task HandleAsync(string key, FineCollectionDetailRequest value)
-		{
-			// Here we can actually write the  
+        public IssueHandler(IFineCollectionManager manager)
+        {
+            _manager = manager;
+        }
+        public Task HandleAsync(string key, FineCollection value)
+        {
+            // Here we can actually write the  
 
-			_manager.UpdateFineCollection(value);
+             _manager.AddFineCollection(value);
 
-			//After successful operation, suppose if the registered user has User Id as 1 the we can produce message for other service's consumption
+            //After successful operation, suppose if the registered user has User Id as 1 the we can produce message for other service's consumption
 
-			return Task.CompletedTask;
-		}
-	}
+            return Task.CompletedTask;
+        }
+    }
 }

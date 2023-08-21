@@ -25,15 +25,18 @@ namespace FineTable.Application.Manager.Implementation
             _serviceFine = serviceFine;
               
         }
-        public async Task<ServiceResult<bool>> AddFineCollection(FineCollectionRequest fineCollectionRequest)
+        public async Task<ServiceResult<bool>> AddFineCollection(FineCollection request)
         {
             try
             {
                 var parse = new EFineCollection()
                 {
-                    CreatedDate = fineCollectionRequest.CreatedDate,
-                    MemberID = fineCollectionRequest.MemberID,
-                    MemberType = fineCollectionRequest.MemberType,
+                    Id = request.Id,
+                    ReturnDate = request.ReturnDate,
+                    Amount =request.FineAmount,
+                    CreatedDate= request.IssuedDate,
+                    MemberID = request.MemberId
+
                 };
 
                 var result = await _service.AddFineCollection(parse);

@@ -15,9 +15,9 @@ namespace FineTable.Application.Kafka.Consumer
 {
 	public class IssueDetailConsumer : BackgroundService
 	{
-		private readonly IKafkaConsumer<string, FineCollectionDetailRequest> _consumer;
+		private readonly IKafkaConsumer<string, FineCollection> _consumer;
 
-		public IssueDetailConsumer(IKafkaConsumer<string, FineCollectionDetailRequest> kafkaConsumer)
+		public IssueDetailConsumer(IKafkaConsumer<string, FineCollection> kafkaConsumer)
 		{
 			_consumer = kafkaConsumer;
 
