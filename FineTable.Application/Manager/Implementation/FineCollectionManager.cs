@@ -29,14 +29,15 @@ namespace FineTable.Application.Manager.Implementation
         {
             try
             {
-                var parse = new EFineCollection()
+				
+				var parse = new EFineCollection()
                 {
                     Id = request.Id,
                     ReturnDate = request.ReturnDate,
                     Amount =request.FineAmount,
                     CreatedDate= request.IssuedDate,
-                    MemberID = request.MemberId
-
+                    MemberID = request.MemberId,
+                    Days = request.Days
                 };
 
                 var result = await _service.AddFineCollection(parse);
