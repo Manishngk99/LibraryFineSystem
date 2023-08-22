@@ -63,8 +63,8 @@ namespace FineTable.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<double?>("Amount")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");

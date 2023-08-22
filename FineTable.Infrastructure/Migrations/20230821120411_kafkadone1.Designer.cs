@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FineTable.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230803111258_seededdata")]
-    partial class seededdata
+    [Migration("20230821120411_kafkadone1")]
+    partial class kafkadone1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,13 +66,16 @@ namespace FineTable.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<double?>("Amount")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Days")
+                    b.Property<int?>("Days")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("FineStatus")
                         .HasColumnType("integer");
 
                     b.Property<int>("MemberID")
@@ -81,7 +84,7 @@ namespace FineTable.Infrastructure.Migrations
                     b.Property<int>("MemberType")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("ReturnDate")
+                    b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
