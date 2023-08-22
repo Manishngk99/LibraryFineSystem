@@ -9,6 +9,6 @@ namespace FineTable.Application.Kafka.Interface
 {
 	public interface IUpdateIssueDetailConsumer
 	{
-		Task IssueDetailConsumer(FineCollectionDetailRequest request);
+		Task IssueDetailConsumer(FineCollection request);
 	}
 }

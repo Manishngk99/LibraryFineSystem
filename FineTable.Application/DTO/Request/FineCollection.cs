@@ -8,21 +8,8 @@ using System.Threading.Tasks;
 
 namespace FineTable.Application.DTO.Request
 {
-	public class FineCollectionDetailRequest
-	{
-		public int MemberID { get; set; }
-		public int Amount { get; set; }
-		public int Days { get; set; }
-		public MemberType MemberType { get; set; }
-		public DateTime CreatedDate { get; set; }
-		public DateTime ReturnDate { get; set; }
-
-		public FineStatus FineStatus { get; set; }
-	}
-
 	public class FineCollection
 	{
-        public int Id { get; set; }
         public DateTime IssuedDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public int IssuedStatus { get; set; }
