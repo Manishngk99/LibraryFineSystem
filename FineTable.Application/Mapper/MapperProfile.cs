@@ -16,6 +16,7 @@ namespace FineTable.Application.Mapper
         {
             CreateMap<FineRequest, EFine>();
             CreateMap<EFine, FineResponse>();
+            CreateMap<FineCollectionUpdateRequest, EFineCollection>();
 
 
         }

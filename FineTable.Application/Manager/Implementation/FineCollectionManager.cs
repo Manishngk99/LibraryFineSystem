@@ -1,4 +1,5 @@
-﻿using FineTable.Application.DTO.Request;
+﻿using AutoMapper;
+using FineTable.Application.DTO.Request;
 using FineTable.Application.DTO.Response;
 using FineTable.Application.Kafka.Interface;
 using FineTable.Application.Manager.Interface;
@@ -19,27 +20,30 @@ namespace FineTable.Application.Manager.Implementation
     {
         private readonly IFineCollectionService _service;
         private readonly IFineService _serviceFine;
-        public FineCollectionManager(IFineCollectionService fineCollectionService, IFineService serviceFine )
+		private readonly IMapper _mapper;
+
+		public FineCollectionManager(IFineCollectionService fineCollectionService, IFineService serviceFine,
+			IMapper mapper)
         {
             _service = fineCollectionService;
             _serviceFine = serviceFine;
-              
+            _mapper = mapper;
         }
         public async Task<ServiceResult<bool>> AddFineCollection(FineCollection request)
         {
             try
             {
-                var parse = new EFineCollection()
+				var parse = new EFineCollection()
                 {
-                    Id = request.Id,
                     ReturnDate = request.ReturnDate,
                     Amount =request.FineAmount,
                     CreatedDate= request.IssuedDate,
-                    MemberID = request.MemberId
-
+                    MemberID = request.MemberId,
+                    Days = request.Days
                 };
 
                 var result = await _service.AddFineCollection(parse);
+             
                 return new ServiceResult<bool>()
                 {
                     Data = true,
@@ -47,32 +51,22 @@ namespace FineTable.Application.Manager.Implementation
                     Status = StatusType.Success
                 };
             }
-            catch (Exception ex) { throw; }
+            catch (Exception ex) {
+				return new ServiceResult<bool>()
+				{
+					Data = false,
+					Message = "Something went wrong",
+					Status = StatusType.Failure
+				};
+			}
         }
 
-        public async Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionDetailRequest fineCollectionRequest)
+        public async Task<ServiceResult<bool>> UpdateFineCollection(FineCollectionUpdateRequest fineCollectionRequest)
         {
             try
             {
-
-                var fineList = await _serviceFine.GetFine();
-                var rate = fineList.Where(x => x.MemberType == fineCollectionRequest.MemberType).Select(x => x.Amount).FirstOrDefault();
-
-                var parse = new EFineCollection()
-                {
-                    Amount = fineCollectionRequest.Amount,  
-                    FineStatus = fineCollectionRequest.FineStatus,
-                    CreatedDate = fineCollectionRequest.CreatedDate,
-                    MemberID = fineCollectionRequest.MemberID,
-                    ReturnDate = fineCollectionRequest.ReturnDate,
-                    MemberType = fineCollectionRequest.MemberType,
-                    Days = 2//fineCollectionRequest.CreatedDate.Day - fineCollectionRequest.ReturnDate.Day,
-                            //  Amount = Days * rate,
-                };
-                parse.Amount = parse.Days * rate;
-
-
-                var result = await _service.UpdateFineCollection(parse);
+                var mapper = _mapper.Map<EFineCollection>(fineCollectionRequest);
+                var result = await _service.UpdateFineCollection(mapper);
                 return new ServiceResult<bool>()
                 {
                     Data = true,
@@ -80,14 +74,21 @@ namespace FineTable.Application.Manager.Implementation
                     Status = StatusType.Success
                 };
             }
-            catch (Exception ex) { throw; }
+            catch (Exception ex) {
+				return new ServiceResult<bool>()
+				{
+					Data = false,
+					Message = "Something went wrong",
+					Status = StatusType.Failure
+				};
+			}
 
         }
         public async Task<ServiceResult<bool>> DeleteFineCollection(int id)
         {
             try
             {
-                var fineCollection = await _serviceFine.GetFineByFineId(id);
+                var fineCollection = await _service.GetFineCollectionById(id);
                 var result = await _service.DeleteFineCollection(fineCollection.Id);
                 return new ServiceResult<bool>()
                 {
@@ -110,7 +111,10 @@ namespace FineTable.Application.Manager.Implementation
                               Id = s.Id,
                               MemberID = s.MemberID,
                               MemberType = s.MemberType,
+                              Amount = s.Amount,
+                              Days = s.Days,
                               CreatedDate = s.CreatedDate,
+                              ReturnDate = s.ReturnDate
                           }).ToList();
 
             return new ServiceResult<List<FineCollectionResponse>>()
@@ -141,9 +145,11 @@ namespace FineTable.Application.Manager.Implementation
                 Id = fine.Id,
                 MemberID = fine.MemberID,
                 MemberType = fine.MemberType,
+                Amount = fine.Amount,
+                Days = fine.Days,
                 CreatedDate = fine.CreatedDate,
-
-            };
+				ReturnDate = fine.CreatedDate
+			};
             return new ServiceResult<FineCollectionResponse>()
             {
                 Data = result,
