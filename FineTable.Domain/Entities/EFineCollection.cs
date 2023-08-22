@@ -20,6 +20,5 @@ namespace FineTable.Domain.Entities
         public DateTime? ReturnDate{get; set;}
         public FineStatus FineStatus { get; set; }
         
-        
     }
 }
