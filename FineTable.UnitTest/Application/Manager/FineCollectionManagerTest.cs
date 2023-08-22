@@ -102,8 +102,33 @@ namespace FineTable.UnitTest.Application.Manager
 			Assert.Equivalent(Expected_Result, Actual_Result);
 		}
 
-		//Revisit
-		[Fact]
+        [Fact]
+        public async Task DeleteFineCollection_OnFailure_ThrowException()
+        {
+			//Arrange
+			int id = 1;
+			
+           
+            var Expected_Result = new ServiceResult<bool>()
+            {
+                Data = false,
+                Message = "Something went wrong",
+                Status = StatusType.Failure
+            };
+
+            //Act
+            _mockFineCollectionService.Setup(x => x.AddFineCollection(It.IsAny<EFineCollection>())).ThrowsAsync(new Exception());
+            var Actual_Result = await _manager.DeleteFineCollection(id);
+
+            //Assert
+            Assert.Equivalent(Expected_Result, Actual_Result);
+        }
+
+
+
+
+        //Revisit
+        [Fact]
 		public async Task GetFineCollection_OnSuccess_ReturnResponseInList()
 		{
 			//Arrange
@@ -149,6 +174,31 @@ namespace FineTable.UnitTest.Application.Manager
 			Assert.Equivalent(Expected_Result, Actual_Result);
 		}
 
+		[Fact]
+		public async Task GetFineCollectionById_OnFailure_ReturnsFailure()
+		{
+			//arrange
+			int id = 1;
+			FeeCollectionSettingDataInfo.init();
+			var response = FeeCollectionSettingDataInfo.fineCollectionResponse;
+			var eFine = FeeCollectionSettingDataInfo.eFineCollection;
+
+			var expected_result = new ServiceResult<FineCollectionResponse>()
+			{
+				Data = null,
+				Message = "Fine not found",
+				Status = StatusType.Failure
+			};
+
+			//act
+			_mockFineCollectionService.Setup(x => x.GetFineCollectionById(id));
+			var actual_result=await _manager.GetFineCollectionById(id);
+
+			//assert
+			Assert.Equivalent(expected_result, actual_result);
+
+		}
+
 
 		//Revisit ThrowAsync did not work
 
@@ -167,7 +217,7 @@ namespace FineTable.UnitTest.Application.Manager
 			};
 
 			//Act
-			_mockFineCollectionService.Setup(x => x.AddFineCollection(eFineCollection)).ThrowsAsync(new Exception());
+			_mockFineCollectionService.Setup(x => x.AddFineCollection(It.IsAny<EFineCollection>())).ThrowsAsync(new Exception());
 			var Actual_Result = await _manager.AddFineCollection(request);
 
 			//Assert
@@ -190,7 +240,7 @@ namespace FineTable.UnitTest.Application.Manager
 
 			//Act
 			_mapper.Setup(x => x.Map<EFineCollection>(It.IsAny<FineCollectionUpdateRequest>)).Returns(response);
-			_mockFineCollectionService.Setup(x => x.UpdateFineCollection(response)).ThrowsAsync(new Exception());
+			_mockFineCollectionService.Setup(x => x.UpdateFineCollection(It.IsAny<EFineCollection>())).ThrowsAsync(new Exception());
 			var Actual_Result = await _manager.UpdateFineCollection(request);
 
 			//Assert

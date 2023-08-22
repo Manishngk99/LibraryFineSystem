@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FineTable.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class kafkadone : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,11 +21,12 @@ namespace FineTable.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MemberID = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false),
-                    Days = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<double>(type: "double precision", nullable: true),
+                    Days = table.Column<int>(type: "integer", nullable: true),
                     MemberType = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    ReturnDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    FineStatus = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,6 +45,15 @@ namespace FineTable.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FineTable", x => x.Id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "FineTable",
+                columns: new[] { "Id", "Amount", "MemberType" },
+                values: new object[,]
+                {
+                    { 1, 50, 0 },
+                    { 2, 10, 1 }
                 });
         }
 

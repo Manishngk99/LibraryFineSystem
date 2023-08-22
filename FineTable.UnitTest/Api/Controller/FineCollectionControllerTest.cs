@@ -83,7 +83,7 @@ namespace FineTable.UnitTest.Api.Controller
 
 			//Act
 			_mockManager.Setup(x => x.AddFineCollection(request)).ReturnsAsync(Expected_Result);
-			var Actual_Result = await _controller.AddFineCollection(request) ;
+			var Actual_Result = await _controller.AddFineCollection(request);
 
 			//Assert
 			Assert.Equivalent(Expected_Result, Actual_Result);

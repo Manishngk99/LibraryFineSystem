@@ -97,7 +97,14 @@ namespace FineTable.Application.Manager.Implementation
                     Status = StatusType.Success
                 };
             }
-            catch (Exception ex) { throw; }
+            catch (Exception ex) {
+                return new ServiceResult<bool>()
+                {
+                    Data = false,
+                    Message = "Something went wrong",
+                    Status = StatusType.Failure
+                };
+            }
         }
 
         public async Task<ServiceResult<List<FineCollectionResponse>>> GetFineCollections()
