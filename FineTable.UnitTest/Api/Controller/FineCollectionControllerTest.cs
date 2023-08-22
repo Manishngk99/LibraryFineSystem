@@ -81,13 +81,13 @@ namespace FineTable.UnitTest.Api.Controller
 				Status = StatusType.Success
 			};
 
-		//	//Act
-		//	_mockManager.Setup(x => x.AddFineCollection(request)).ReturnsAsync(Expected_Result);
-		//	var Actual_Result = await _controller.AddFineCollection(request) ;
+			//Act
+			_mockManager.Setup(x => x.AddFineCollection(request)).ReturnsAsync(Expected_Result);
+			var Actual_Result = await _controller.AddFineCollection(request);
 
-		//	//Assert
-		//	Assert.Equivalent(Expected_Result, Actual_Result);
-		//}
+			//Assert
+			Assert.Equivalent(Expected_Result, Actual_Result);
+		}
 
 		[Fact]
 		public async Task UpdateFineCollection_OnSuccess_ReturnTrue()
